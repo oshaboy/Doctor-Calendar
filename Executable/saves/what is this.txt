@@ -1,0 +1,1 @@
+This is the saves folder. it saves the day info here. Please keep this folder in the same folder as your .jar file.
