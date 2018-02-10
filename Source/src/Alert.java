@@ -9,6 +9,7 @@ import javax.swing.*;
 
 public class Alert extends JFrame {
 	public Alert(String s) {
+		setTitle("Alert");
 		setLayout(null);
 		setSize(200,150);
 		JLabel label = new JLabel(s);

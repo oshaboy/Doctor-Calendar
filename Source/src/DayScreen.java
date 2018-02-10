@@ -42,11 +42,13 @@ public class DayScreen extends JFrame {
 	public DayScreen(int year, int month, int day) {
 		
 
+		setTitle("Doctor Calendar");
 		setLayout(null);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.year = year;
 		this.month = month;
 		this.day = day;
+		
 
 		isToday = Program.GlobalCalendar.get(GregorianCalendar.DAY_OF_MONTH) == day
 				&& Program.GlobalCalendar.get(GregorianCalendar.MONTH) == month

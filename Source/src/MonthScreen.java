@@ -31,6 +31,8 @@ public class MonthScreen extends JFrame {
 	private int year;
 	
 	public MonthScreen(int year, int month) {
+		
+		setTitle("Doctor Calendar");
 		this.year = year;
 		this.month = month;
 		if (month == Program.GlobalCalendar.get(GregorianCalendar.MONTH) && year == Program.GlobalCalendar.get(GregorianCalendar.YEAR)) 
