@@ -2,17 +2,18 @@
  * Copyright oshaboy, Noam Gilor. 2018
  */
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.Scanner;
 
 import javax.swing.*;
 public class MonthScreen extends JFrame {
+
+	private static final long serialVersionUID = -1710837254471908309L;
+
 	//private GregorianCalendar calendar = new GregorianCalendar();
 	//private Container container = new JContainer();
 	private JButton[][] days;
@@ -28,8 +29,14 @@ public class MonthScreen extends JFrame {
 	private int firstdayofweek;
 	private int lastdayofmonth;
 	private int month;
+	@SuppressWarnings("unused")
 	private int year;
+	//private JComboBox<Color> colorBox;
+	private Color curcolor = Color.CYAN.brighter();
 	
+	public Color getColor() {
+		return curcolor;
+	}
 	public MonthScreen(int year, int month) {
 		
 		setTitle("Doctor Calendar");
@@ -68,6 +75,7 @@ public class MonthScreen extends JFrame {
 							}
 							int day = Integer.parseInt(daystring);
 							new DayScreen(year, month, day ); //got counter that way because counter is local
+							//new MonthScreen(year,month);
 							
 							
 						}
@@ -86,6 +94,7 @@ public class MonthScreen extends JFrame {
 							}
 							int day = Integer.parseInt(daystring);
 							new DayScreen(year+(month%12), (month+1)%12,  day); 
+							//new MonthScreen(year+(month%12), (month+1)%12);
 							
 							
 						}
@@ -108,6 +117,7 @@ public class MonthScreen extends JFrame {
 							int day = Integer.parseInt(daystring);
 							new DayScreen(year-(month==0?1:0), (month-1) + (month==0?1:0) * 12, day); //got counter that way because counter is local
 							
+
 							
 						}
 					
@@ -190,7 +200,19 @@ public class MonthScreen extends JFrame {
 		Saturday.setBounds(BUTTONWIDTH * 6 + BUTTONWIDTH/2 -  Saturday.getPreferredSize().width / 2, margin + 2, Saturday.getPreferredSize().width, Saturday.getPreferredSize().height);
 		add(Saturday);
 		
+		//Color[] allBackgroundColors = {Color.CYAN, Color.ORANGE, Color.RED.brighter(), Color.YELLOW.brighter(), Color.PINK, Color.LIGHT_GRAY, Color.GREEN.brighter()};
+		/*colorBox = new JComboBox<Color>(allBackgroundColors);
+		colorBox.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				curcolor = (Color) colorBox.getSelectedItem();
+			}
+			
+		});
+		colorBox.setBounds(yearBox.getPreferredSize().width  + monthBox.getPreferredSize().width + 32,0, colorBox.getPreferredSize().width, colorBox.getPreferredSize().height);*/
+		//add(colorBox);
 		
 		//error correction
 		JButton Invisible = new JButton();
@@ -202,6 +224,7 @@ public class MonthScreen extends JFrame {
 				String date_iso8601 = Integer.toString(year) + "-" + Integer.toString(month+1) + "-" + day.getText();
 				Scanner s = new Scanner(new File("saves",date_iso8601 + ".day"), "UTF-8");
 				day.setText("<html>" + day.getText() + "<p>" + s.nextLine());
+				s.close();
 			}
 			 catch (FileNotFoundException e1) {
 				continue;
@@ -235,7 +258,7 @@ public class MonthScreen extends JFrame {
 		JButton newday = days[newday_index%7][newday_index/7];
 		JButton oldday = days[(newday_index-1)%7][(newday_index-1)/7];
 		oldday.setBackground(Color.WHITE);
-		newday.setBackground(Color.CYAN);
+		newday.setBackground(curcolor);
 		Program.curDay = new DayScreen();
 		
 		

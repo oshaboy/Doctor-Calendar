@@ -3,23 +3,22 @@
  */
 import java.util.GregorianCalendar;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 import java.util.concurrent.ScheduledExecutorService;
-
+//import java.awt.event.WindowAdapter;
 import javax.swing.*;
 
-public class DayScreen extends JFrame {
+public class DayScreen extends JFrame  {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4066367111394938031L;
 	private final int PATIENTS_PER_DAY = 4*24;
 	private final int PATIENTS_PER_ROW = 4;
-
 	private final int PATIENTS_PER_COLUMN = 24;
 	private final int PATIENT_HEIGHT = 16;
 	private final int PATIENT_WIDTH = 100;
@@ -31,8 +30,11 @@ public class DayScreen extends JFrame {
 	private JTextField[] allClients = new JTextField[PATIENTS_PER_DAY];
 	private JButton saveButton;
 	private JButton loadButton;
+	@SuppressWarnings("unused")
 	private int year;
+	@SuppressWarnings("unused")
 	private int month;
+	@SuppressWarnings("unused")
 	private int day;
 	private boolean isToday;
 	private JTextField whatday;
@@ -44,7 +46,7 @@ public class DayScreen extends JFrame {
 
 		setTitle("Doctor Calendar");
 		setLayout(null);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.year = year;
 		this.month = month;
 		this.day = day;
@@ -110,7 +112,7 @@ public class DayScreen extends JFrame {
 					}
 					s.close();
 				} catch (FileNotFoundException e1) {
-					new Alert("No file made for this day");
+					//new Alert("No file made for this day");
 					
 				} catch (java.util.NoSuchElementException e1) {
 					System.out.print(debug_counter+" " + curline);
@@ -160,15 +162,28 @@ public class DayScreen extends JFrame {
 		if (isToday) {
 			int hour = Program.GlobalCalendar.get(GregorianCalendar.HOUR_OF_DAY);
 			int minute = Program.GlobalCalendar.get(GregorianCalendar.MINUTE);
-			allClients[minute/15 + hour * 4].setBackground(Color.CYAN);
+			allClients[minute/15 + hour * 4].setBackground(Program.mainScreen.getColor());
 		}
+		
+
 		//error correction		
 		JTextField Invisible = new JTextField();
 		Invisible.setVisible(false);
 		add(Invisible); 
 		loadButton.doClick();
+		this.addWindowListener(new WindowAdapter() {
+			 @Override
+			    public void windowClosing(WindowEvent we)
+			    { 
+			        saveButton.doClick();
+			        Program.mainScreen.dispose();
+			        Program.mainScreen=new MonthScreen(year, month);
+			        we.getWindow().dispose();
+			    }
+		});
 		setVisible(true);
 	}
+	
 	public boolean getIsToday() {
 		return isToday;
 	}
@@ -180,8 +195,11 @@ public class DayScreen extends JFrame {
 		if (isToday) {
 			int hour = Program.GlobalCalendar.get(GregorianCalendar.HOUR_OF_DAY);
 			int minute = Program.GlobalCalendar.get(GregorianCalendar.MINUTE);
-			allClients[minute/15 + hour * 4].setBackground(Color.CYAN);
+			allClients[minute/15 + hour * 4].setBackground(Program.mainScreen.getColor());
 			allClients[(minute/15 + hour * 4) - 1].setBackground(Color.WHITE);
 		}
 	}
+
+
+
 }

@@ -1,13 +1,15 @@
 /*
  * Copyright oshaboy, Noam Gilor. 2018
  */
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 public class Alert extends JFrame {
+
+	private static final long serialVersionUID = -659345236283411174L;
+
 	public Alert(String s) {
 		setTitle("Alert");
 		setLayout(null);
